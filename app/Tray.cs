@@ -257,20 +257,11 @@ namespace ParsecVDisplay
                 var displays = Vdd.Core.GetDisplays();
                 if (displays.Count > 0)
                 {
-                    if (MessageBox.Show(Owner, App.GetTranslation("t_msg_prompt_remove_all"),
-                            Program.AppName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
-                        return;
-
                     for (int i = displays.Count - 1; i >= 0; i--)
                     {
                         var index = displays[i].DisplayIndex;
                         Vdd.Controller.RemoveDisplay(index);
                     }
-                }
-                else
-                {
-                    MessageBox.Show(Owner, App.GetTranslation("t_msg_no_displays_to_remove"),
-                        Program.AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             catch (Vdd.ErrorOperationFailed)
