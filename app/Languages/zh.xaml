@@ -26,6 +26,9 @@
 
     <!--Tray menu-->
     <system:String x:Key="t_remove_last_display">移除最后一个虚拟显示器</system:String>
+    <system:String x:Key="t_remove_all_displays">去除所有虚拟显示器</system:String>  
+    <system:String x:Key="t_msg_prompt_remove_all">确定要去除所有虚拟显示器吗？</system:String>  
+    <system:String x:Key="t_msg_no_displays_to_remove">当前没有可以去除的虚拟显示器。</system:String>
     <system:String x:Key="t_options">选项</system:String>
     <system:String x:Key="t_run_on_startup">开机启动</system:String>
     <system:String x:Key="t_restore_displays">恢复上次关闭的显示器</system:String>

@@ -66,6 +66,7 @@ namespace ParsecVDisplay
                         new ToolStripSeparator(),
                         new ToolStripMenuItem("t_add_display", null, AddDisplay),
                         new ToolStripMenuItem("t_remove_last_display", null, RemoveLastDisplay),
+                        new ToolStripMenuItem("t_remove_all_displays", null, RemoveAllDisplays), // 添加这一行
                         new ToolStripSeparator(),
                         new ToolStripMenuItem("t_options")
                         {
@@ -249,6 +250,36 @@ namespace ParsecVDisplay
             }
         }
 
+        void RemoveAllDisplays(object sender, EventArgs e)
+        {
+            try
+            {
+                var displays = Vdd.Core.GetDisplays();
+                if (displays.Count > 0)
+                {
+                    if (MessageBox.Show(Owner, App.GetTranslation("t_msg_prompt_remove_all"),
+                            Program.AppName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                        return;
+
+                    for (int i = displays.Count - 1; i >= 0; i--)
+                    {
+                        var index = displays[i].DisplayIndex;
+                        Vdd.Controller.RemoveDisplay(index);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show(Owner, App.GetTranslation("t_msg_no_displays_to_remove"),
+                        Program.AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Vdd.ErrorOperationFailed)
+            {
+                MessageBox.Show(Owner, App.GetTranslation("t_msg_failed_to_remove_display"),
+                    Program.AppName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
         public void QueryDriver(object sender, EventArgs e)
         {
             ShowApp();
@@ -330,7 +361,9 @@ namespace ParsecVDisplay
             {
                 if (item is ToolStripMenuItem mi)
                 {
-                    if (mi.Tag is string t) { }
+                    if (mi.Tag is string t)
+                    {
+                    }
                     else
                     {
                         t = mi.Text;
@@ -365,7 +398,7 @@ namespace ParsecVDisplay
             if (displays.Count > 0)
             {
                 if (MessageBox.Show(Owner, App.GetTranslation("t_msg_prompt_leave_all"),
-                    Program.AppName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                        Program.AppName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     return;
             }
 
